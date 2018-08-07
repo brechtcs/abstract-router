@@ -1,0 +1,38 @@
+{
+  "name": "abstract-router",
+  "version": "1.0.0",
+  "description": "Abstract away your app logic from its environment",
+  "keywords": [
+    "router",
+    "abstract",
+    "server",
+    "browser",
+    "client"
+  ],
+  "main": "index.js",
+  "scripts": {
+    "start": "node example/app.js",
+    "test": "standard"
+  },
+  "dependencies": {
+    "pathname-match": "^1.2.0",
+    "wayfarer": "^6.6.4"
+  },
+  "devDependencies": {
+    "express": "^4.16.3",
+    "standard": "^10.0.3"
+  },
+  "directories": {
+    "example": "example"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/brechtcs/abstract-router.git"
+  },
+  "bugs": {
+    "url": "https://github.com/brechtcs/abstract-router/issues"
+  },
+  "homepage": "https://github.com/brechtcs/abstract-router#readme",
+  "author": "Brecht Savelkoul <brecht.savelkoul@gmail.com>",
+  "license": "Apache-2.0"
+}
