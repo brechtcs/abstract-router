@@ -2,24 +2,21 @@ var history = require('nanohistory')
 var href = require('nanohref')
 var html = require('nanohtml')
 var morph = require('nanomorph')
+var pathname = require('pathname-match')
 
-module.exports = function (app) {
+module.exports = function (app, logger) {
+  app.keep('logger', logger)
+  app.keep('json', jsonMethod)
+  app.keep('view', viewMethod)
+
   function render (location) {
     app.clean()
 
-    app.prop('json', jsonMethod)
-    app.prop('view', viewMethod)
-    app.prop('logger', {
-      error: console.error,
-      info: console.info,
-      warn: console.warn
-    })
-
-    location = location || window.location
-    app.state.url = location.href
     app.state.method = 'GET'
+    app.state.pathname = pathname(location.href)
+    app.state.url = location.href
 
-    app.match(location.href)
+    app.match(app.state.pathname)
   }
 
   pageify(render)
@@ -36,11 +33,11 @@ function viewMethod (body) {
 }
 
 function pageify (handler) {
-  var OBJ = {}
+  var EMPTY_OBJ = {}
   history(handler)
   href(location => {
-    window.history.pushState(OBJ, null, location.href)
+    window.history.pushState(EMPTY_OBJ, null, location.href)
     handler(location)
   })
-  handler()
+  handler(window.location)
 }

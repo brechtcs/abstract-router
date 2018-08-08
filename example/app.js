@@ -6,7 +6,7 @@ var router = AbstractRouter.create({
   cleanState: {title: 'Abstract Router'}
 })
 
-router.route('/', function (state, app) {
+router.on('/', function (state, app) {
   app.logger.info(state.method, state.url)
   app.view(html`<body>
     <ul>
@@ -17,9 +17,13 @@ router.route('/', function (state, app) {
   </body>`)
 })
 
-router.route('/:route', function (state, app) {
+router.on('/:route', function (state, app) {
   app.logger.info(state.method, state.url)
   app.json(state)
 })
 
-router.init(runtime)
+router.impl(runtime, {
+  error: console.error,
+  info: console.info,
+  warn: console.warn
+})

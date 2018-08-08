@@ -1,21 +1,23 @@
 var express = require('express')
+var pathname = require('pathname-match')
 
-module.exports = function (app) {
+module.exports = function (app, logger) {
   var port = process.env.PORT || 3007
-  var logger = createLogger()
   var server = express()
+
+  app.keep('logger', logger)
 
   server.use((req, res) => {
     app.clean()
 
-    app.prop('json', createJsonMethod(res))
-    app.prop('view', createViewMethod(res))
-    app.prop('logger', logger)
+    app.set('json', createJsonMethod(res))
+    app.set('view', createViewMethod(res))
 
-    app.state.url = req.url
     app.state.method = req.method
+    app.state.pathname = pathname(req.url)
+    app.state.url = req.url
 
-    app.match(req.url)
+    app.match(app.state.pathname)
   })
 
   server.listen(port, (err) => {
