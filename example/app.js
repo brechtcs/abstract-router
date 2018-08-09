@@ -14,6 +14,10 @@ router.on('/', function (state, app) {
       <li><a href="/second">second</a></li>
       <li><a href="/third">third</a></li>
     </ul>
+    <form action="/first" method="POST">
+      <input type="hidden" value="yep">
+      <input type="submit" value="post!">
+    </form>
   </body>`)
 })
 
