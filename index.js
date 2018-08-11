@@ -16,14 +16,14 @@ class AbstractRouter {
 
   constructor (dft, opts) {
     this.app = new AppContext(opts.cleanState)
+    this.keepers = []
     this.opts = opts
-    this.props = {}
     this.router = router(dft)
   }
 
   clean () {
     this.app = new AppContext(this.opts.cleanState)
-    Object.keys(this.props).forEach(name => {
+    this.keepers.forEach(name => {
       this.app.prop(name, this.props[name])
     })
   }
@@ -33,8 +33,10 @@ class AbstractRouter {
   }
 
   keep (name, prop) {
+    assert(!this[name], 'Cannot overwrite property: ' + name)
+    this[name] = prop
     this.app.prop(name, prop)
-    this.props[name] = prop
+    this.keepers.push(name)
   }
 
   on (route, handler) {
@@ -68,7 +70,7 @@ class AppContext {
   }
 
   prop (name, prop) {
-    assert(!this.props[name], 'Cannot overwrite app property: ' + name)
+    assert(!this.props[name], 'Cannot overwrite property: ' + name)
     this.props[name] = prop
   }
 }
