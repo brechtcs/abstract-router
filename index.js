@@ -24,7 +24,7 @@ class AbstractRouter {
   clean () {
     this.app = new AppContext(this.opts.cleanState)
     this.keepers.forEach(name => {
-      this.app.prop(name, this.props[name])
+      this.app.prop(name, this[name])
     })
   }
 
