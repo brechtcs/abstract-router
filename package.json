@@ -1,6 +1,6 @@
 {
   "name": "abstract-router",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "description": "Abstract away your app logic from its environment",
   "keywords": [
     "router",
