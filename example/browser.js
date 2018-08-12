@@ -1,12 +1,18 @@
+var app = require('./app')
 var html = require('nanohtml')
 var morph = require('nanomorph')
 var pathname = require('pathname-match')
 var spa = require('../spa')
 
-module.exports = function (app, logger) {
-  app.keep('logger', logger)
+app.impl(function (app, logger) {
   app.keep('json', jsonMethod)
   app.keep('view', viewMethod)
+
+  app.keep('logger', {
+    error: console.error,
+    info: console.info,
+    warn: console.warn
+  })
 
   function render (target) {
     app.clean()
@@ -19,7 +25,7 @@ module.exports = function (app, logger) {
   }
 
   spa(render)
-}
+})
 
 function jsonMethod (json) {
   viewMethod(html`<body>

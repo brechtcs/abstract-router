@@ -1,11 +1,16 @@
+var app = require('./app')
 var express = require('express')
 var pathname = require('pathname-match')
 
-module.exports = function (app, logger) {
+app.impl(function (app) {
   var port = process.env.PORT || 3007
   var server = express()
 
-  app.keep('logger', logger)
+  app.keep('logger', {
+    error: console.error,
+    info: console.info,
+    warn: console.warn
+  })
 
   server.use((req, res) => {
     app.clean()
@@ -22,9 +27,9 @@ module.exports = function (app, logger) {
 
   server.listen(port, (err) => {
     if (err) throw err
-    else logger.info('Listening at localhost:' + port)
+    else app.logger.info('Listening at localhost:' + port)
   })
-}
+})
 
 function createJsonMethod (res) {
   return function (json, status) {

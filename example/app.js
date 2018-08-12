@@ -1,6 +1,5 @@
 var AbstractRouter = require('../')
 var html = require('nanohtml')
-var runtime = require('is-browser') ? require('./browser') : require('./server')
 
 var router = AbstractRouter.create({
   cleanState: {title: 'Abstract Router'}
@@ -26,8 +25,4 @@ router.on('/:route', function (state, app) {
   app.json(state)
 })
 
-router.impl(runtime, {
-  error: console.error,
-  info: console.info,
-  warn: console.warn
-})
+module.exports = router
